@@ -19,13 +19,6 @@
       font-size: 2.5rem;
       margin-top: 40px;
       color: #c62828;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
     }
 
     .message {
@@ -63,23 +56,6 @@
       background: rgba(255, 255, 255, 0.5);
       border-radius: 16px;
       box-shadow: 0 0 12px rgba(255, 105, 135, 0.5);
-    }
-
-    input {
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      margin: 5px;
-      font-size: 1rem;
-      width: 40%;
-      max-width: 200px;
-    }
-
-    .love-score {
-      margin-top: 10px;
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #d32f2f;
     }
 
     .countdown {
@@ -146,15 +122,6 @@
 
   <button class="btn" onclick="alert('I Promise To Be Better 💖')">Tap If You Forgive Me</button>
 
-  <!-- 💘 Love Calculator -->
-  <div class="section">
-    <h2>💘 Love Calculator</h2>
-    <input type="text" id="yourName" placeholder="Your Name" />
-    <input type="text" id="partnerName" placeholder="Shruu's Name" />
-    <button class="btn" onclick="calculateLove()">Calculate</button>
-    <div class="love-score" id="loveScore"></div>
-  </div>
-
   <!-- 🎂 Birthday Countdown -->
   <div class="section">
     <h2>🎂 Shruu's Birthday Countdown</h2>
@@ -162,9 +129,15 @@
     <div class="countdown" id="countdownTimer"></div>
   </div>
 
-  <!-- 🎵 Audio -->
-  <audio id="bgMusic" loop autoplay preload="auto">
-    <source src="/mast-magan.mp3" type="audio/mpeg">
+  <!-- 🎵 Play Song Button -->
+  <div class="section">
+    <h2>🎶 Our Song</h2>
+    <button class="btn" onclick="playSong()">Play Mast Magan 🎵</button>
+  </div>
+
+  <!-- 🎵 Background Audio -->
+  <audio id="bgMusic" preload="auto">
+    <source src="/mast-magan.mp3" type="audio/mpeg" />
     Your browser does not support the audio element.
   </audio>
 
@@ -180,24 +153,9 @@
       hearts.appendChild(heart);
     }
 
-    // Love Calculator
-    function calculateLove() {
-      const yourName = document.getElementById('yourName').value.trim();
-      const partnerName = document.getElementById('partnerName').value.trim();
-      const scoreDiv = document.getElementById('loveScore');
-
-      if (yourName === "" || partnerName === "") {
-        scoreDiv.textContent = "Please enter both names 😅";
-        return;
-      }
-
-      const lovePercent = Math.floor(Math.random() * 21) + 80;
-      scoreDiv.textContent = `${yourName} ❤️ ${partnerName} = ${lovePercent}% Match!`;
-    }
-
-    // Countdown Timer
+    // Birthday Countdown
     const countdown = document.getElementById("countdownTimer");
-    const birthdayDate = new Date("2025-12-06T00:00:00").getTime(); // Update her birthday here
+    const birthdayDate = new Date("2025-06-27T00:00:00").getTime();
 
     setInterval(() => {
       const now = new Date().getTime();
@@ -215,6 +173,12 @@
 
       countdown.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s left 💫`;
     }, 1000);
+
+    // Play music
+    function playSong() {
+      const music = document.getElementById("bgMusic");
+      music.play().catch(err => console.log("Error:", err));
+    }
 
     // Emoji Trail
     const emojis = ["❤️", "💫", "💕"];
