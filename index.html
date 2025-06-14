@@ -30,7 +30,7 @@
       margin: 10px auto;
     }
 
-    .forgive-btn {
+    .btn {
       margin-top: 20px;
       padding: 12px 24px;
       font-size: 1.2rem;
@@ -42,7 +42,7 @@
       transition: transform 0.2s;
     }
 
-    .forgive-btn:hover {
+    .btn:hover {
       transform: scale(1.05);
       background: #ff3e6c;
     }
@@ -79,14 +79,15 @@
   <p>Mujhse jo bhi bura lag gaya ho, please mujhe maaf kar do... bina tumhare sab kuch suna sa lagta hai. 😔</p>
   <p>Tumse mazaak mein kuch keh diya, lekin dil se nahi bola tha... 💬💞</p>
 
-  <button class="forgive-btn" onclick="alert('I Promise To Be Better 💖')">Tap If You Forgive Me</button>
+  <button class="btn" onclick="alert('I Promise To Be Better 💖')">Tap If You Forgive Me</button>
+  <button class="btn" onclick="playMusic()" style="margin-top: 15px;">🎵 Tap to Play Song</button>
 
-  <audio id="bgMusic" loop>
+  <audio id="bgMusic" loop preload="auto">
     <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-    // Add floating hearts
+    // Floating hearts
     const heartsContainer = document.querySelector('.hearts');
     for (let i = 0; i < 40; i++) {
       const heart = document.createElement('div');
@@ -97,8 +98,11 @@
       heartsContainer.appendChild(heart);
     }
 
-    // Music play on user interaction
-    window.addEventListener('DOMContentLoaded', function () {
-      const music = document.getElementById('bgMusic');
-      document.body.addEventListener('click', function () {
-        if (music.paused
+    // Music control
+    function playMusic() {
+      const music = document.getElementById("bgMusic");
+      music.play().catch(err => console.log("Error:", err));
+    }
+  </script>
+</body>
+</html>
