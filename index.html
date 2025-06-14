@@ -17,6 +17,12 @@
       height: 100vh;
       overflow: hidden;
       text-align: center;
+      animation: fadeIn 2s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     h1 {
@@ -59,16 +65,49 @@
     .heart {
       width: 20px;
       height: 20px;
-      background: red;
       position: absolute;
-      animation: float 5s linear infinite;
+      background: red;
       transform: rotate(45deg);
-      border-radius: 50% 50% 0 0;
+      animation: float 5s linear infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      top: 0;
+      left: -10px;
     }
 
     @keyframes float {
       0% { transform: translateY(100vh) rotate(45deg); opacity: 1; }
       100% { transform: translateY(-10vh) rotate(45deg); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+      p {
+        font-size: 1.2rem;
+        padding: 0 20px;
+      }
+      .btn {
+        width: 80%;
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
@@ -80,10 +119,10 @@
   <p>Tumse mazaak mein kuch keh diya, lekin dil se nahi bola tha... 💬💞</p>
 
   <button class="btn" onclick="alert('I Promise To Be Better 💖')">Tap If You Forgive Me</button>
-  <button class="btn" onclick="playMusic()" style="margin-top: 15px;">🎵 Tap to Play Song</button>
+  <button class="btn" onclick="playMusic()">🎵 Tap to Play "Saware"</button>
 
   <audio id="bgMusic" loop preload="auto">
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/08/audio_9fa4844cd9.mp3?filename=saware-119542.mp3" type="audio/mpeg">
   </audio>
 
   <script>
@@ -101,7 +140,14 @@
     // Music control
     function playMusic() {
       const music = document.getElementById("bgMusic");
-      music.play().catch(err => console.log("Error:", err));
+      music.play()
+        .then(() => {
+          alert('🎶 "Saware" is playing now');
+        })
+        .catch(err => {
+          console.log("Music play error:", err);
+          alert('⚠️ Unable to play music. Try tapping again.');
+        });
     }
   </script>
 </body>
