@@ -7,19 +7,19 @@
   <style>
     body {
       margin: 0;
+      padding: 0 16px;
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(to top left, #ffdde1, #ee9ca7);
       color: #333;
-      overflow: hidden;
+      overflow-x: hidden;
       text-align: center;
-      height: 100vh;
     }
 
     h1 {
-      font-size: 3rem;
-      margin-top: 60px;
-      animation: pulse 2s infinite;
+      font-size: 2.5rem;
+      margin-top: 40px;
       color: #c62828;
+      animation: pulse 2s infinite;
     }
 
     @keyframes pulse {
@@ -28,35 +28,69 @@
       100% { transform: scale(1); }
     }
 
-    .typing {
-      display: inline-block;
-      font-size: 1.4rem;
-      max-width: 80%;
-      white-space: pre-wrap;
+    .message {
+      font-size: 1.3rem;
       margin: 20px auto;
+      max-width: 90vw;
+      line-height: 1.6;
+      padding: 15px;
+      background-color: rgba(255, 255, 255, 0.6);
+      border-radius: 12px;
+      box-shadow: 0 0 10px #ff9aa2;
     }
 
     .btn {
       margin: 10px;
       padding: 12px 24px;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       background: #ff6f91;
       color: white;
       border: none;
       border-radius: 10px;
       cursor: pointer;
-      transition: 0.3s ease;
+      transition: 0.3s;
       box-shadow: 0 0 10px #ff6f91;
     }
 
     .btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 20px #ff3e6c;
       background: #ff3e6c;
     }
 
+    .section {
+      margin-top: 40px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 16px;
+      box-shadow: 0 0 12px rgba(255, 105, 135, 0.5);
+    }
+
+    input {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin: 5px;
+      font-size: 1rem;
+      width: 40%;
+      max-width: 200px;
+    }
+
+    .love-score {
+      margin-top: 10px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #d32f2f;
+    }
+
+    .countdown {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #6a1b9a;
+      margin-top: 10px;
+    }
+
     .hearts {
-      position: absolute;
+      position: fixed;
       top: 0; left: 0;
       width: 100%;
       height: 100%;
@@ -65,8 +99,8 @@
     }
 
     .heart {
-      width: 20px;
-      height: 20px;
+      width: 15px;
+      height: 15px;
       background: red;
       position: absolute;
       transform: rotate(45deg);
@@ -77,117 +111,135 @@
     .heart::after {
       content: '';
       position: absolute;
-      width: 20px;
-      height: 20px;
+      width: 15px;
+      height: 15px;
       background: red;
       border-radius: 50%;
     }
 
-    .heart::before { top: -10px; left: 0; }
-    .heart::after { top: 0; left: -10px; }
+    .heart::before { top: -7.5px; left: 0; }
+    .heart::after { top: 0; left: -7.5px; }
 
     @keyframes float {
       0% { transform: translateY(100vh) rotate(45deg); opacity: 1; }
       100% { transform: translateY(-10vh) rotate(45deg); opacity: 0; }
     }
 
-    .floating-text {
-      position: absolute;
-      color: #b71c1c;
-      font-weight: bold;
-      animation: drift 12s linear infinite;
-      font-size: 1.1rem;
-    }
-
-    @keyframes drift {
-      from { transform: translateY(100vh); opacity: 1; }
-      to { transform: translateY(-10vh); opacity: 0; }
-    }
-
-    @media (max-width: 600px) {
-      h1 { font-size: 2rem; }
-      .btn { font-size: 1rem; width: 80%; }
-      .typing { font-size: 1.1rem; padding: 0 10px; }
+    @media (min-width: 600px) {
+      h1 { font-size: 3rem; }
+      .message { font-size: 1.4rem; }
+      .btn { font-size: 1.2rem; }
     }
   </style>
 </head>
 <body>
   <div class="hearts"></div>
   <h1>I'm Sorry Shruu 💔</h1>
-  <div class="typing" id="typewriter"></div>
+
+  <div class="message">
+    Mujhse jo bhi bura lag gaya ho,<br>
+    please mujhe maaf kar do...<br>
+    Tumhare bina sab kuch suna sa lagta hai 😔<br><br>
+    Kabhi kabhi mazaak mein kuch keh diya,<br>
+    lekin dil se nahi bola tha 💬💞
+  </div>
 
   <button class="btn" onclick="alert('I Promise To Be Better 💖')">Tap If You Forgive Me</button>
-  <button class="btn" onclick="playMusic()">🎵 Play “Mast Magan”</button>
 
-  <audio id="bgMusic" loop preload="auto">
+  <!-- 💘 Love Calculator -->
+  <div class="section">
+    <h2>💘 Love Calculator</h2>
+    <input type="text" id="yourName" placeholder="Your Name" />
+    <input type="text" id="partnerName" placeholder="Shruu's Name" />
+    <button class="btn" onclick="calculateLove()">Calculate</button>
+    <div class="love-score" id="loveScore"></div>
+  </div>
+
+  <!-- 🎂 Birthday Countdown -->
+  <div class="section">
+    <h2>🎂 Shruu's Birthday Countdown</h2>
+    <p>Countdown to her special day! 🎉</p>
+    <div class="countdown" id="countdownTimer"></div>
+  </div>
+
+  <!-- 🎵 Audio -->
+  <audio id="bgMusic" loop autoplay preload="auto">
     <source src="/mast-magan.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
 
   <script>
-    // Typing Effect
-    const message = `Mujhse jo bhi bura lag gaya ho,\nplease mujhe maaf kar do...\nTumhare bina sab kuch suna sa lagta hai 😔\n\nKabhi kabhi mazaak mein kuch keh diya,\nlekin dil se nahi bola tha 💬💞`;
-    const typeTarget = document.getElementById("typewriter");
-    let i = 0;
-
-    function typeLine() {
-      if (i < message.length) {
-        typeTarget.textContent += message[i] === '\n' ? '\n' : message[i];
-        i++;
-        setTimeout(typeLine, 50);
-      }
-    }
-    typeLine();
-
-    // Music Play
-    function playMusic() {
-      const music = document.getElementById("bgMusic");
-      music.play()
-        .then(() => alert("🎶 'Mast Magan' is now playing"))
-        .catch(() => alert("⚠️ Tap again to allow music."));
-    }
-
-    // Hearts Background
+    // Floating hearts
     const hearts = document.querySelector('.hearts');
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 30; i++) {
       const heart = document.createElement('div');
       heart.className = 'heart';
       heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (5 + Math.random() * 3) + 's';
       heart.style.top = Math.random() * 100 + 'vh';
+      heart.style.animationDuration = (5 + Math.random() * 3) + 's';
       hearts.appendChild(heart);
     }
 
-    // Floating "I miss you"
-    const texts = ["I miss you 💭", "💖 Thinking of you", "Tere bina sab suna hai..."];
-    for (let i = 0; i < 15; i++) {
-      const float = document.createElement('div');
-      float.className = 'floating-text';
-      float.innerText = texts[i % texts.length];
-      float.style.left = Math.random() * 90 + 'vw';
-      float.style.top = Math.random() * 100 + 'vh';
-      float.style.animationDuration = (8 + Math.random() * 5) + 's';
-      document.body.appendChild(float);
+    // Love Calculator
+    function calculateLove() {
+      const yourName = document.getElementById('yourName').value.trim();
+      const partnerName = document.getElementById('partnerName').value.trim();
+      const scoreDiv = document.getElementById('loveScore');
+
+      if (yourName === "" || partnerName === "") {
+        scoreDiv.textContent = "Please enter both names 😅";
+        return;
+      }
+
+      const lovePercent = Math.floor(Math.random() * 21) + 80;
+      scoreDiv.textContent = `${yourName} ❤️ ${partnerName} = ${lovePercent}% Match!`;
     }
+
+    // Countdown Timer
+    const countdown = document.getElementById("countdownTimer");
+    const birthdayDate = new Date("2025-12-06T00:00:00").getTime(); // Update her birthday here
+
+    setInterval(() => {
+      const now = new Date().getTime();
+      const distance = birthdayDate - now;
+
+      if (distance < 0) {
+        countdown.textContent = "🎉 It's Her Birthday Today! 🎉";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdown.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s left 💫`;
+    }, 1000);
 
     // Emoji Trail
     const emojis = ["❤️", "💫", "💕"];
-    document.addEventListener("mousemove", (e) => {
+    document.addEventListener("mousemove", (e) => spawnEmoji(e.pageX, e.pageY));
+    document.addEventListener("touchmove", (e) => {
+      const touch = e.touches[0];
+      spawnEmoji(touch.pageX, touch.pageY);
+    });
+
+    function spawnEmoji(x, y) {
       const emoji = document.createElement("div");
       emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
       emoji.style.position = "absolute";
-      emoji.style.left = e.pageX + "px";
-      emoji.style.top = e.pageY + "px";
-      emoji.style.fontSize = "20px";
+      emoji.style.left = x + "px";
+      emoji.style.top = y + "px";
+      emoji.style.fontSize = "18px";
       emoji.style.opacity = 1;
       emoji.style.transition = "all 1s ease-out";
       document.body.appendChild(emoji);
       setTimeout(() => {
-        emoji.style.top = (e.pageY - 50) + "px";
+        emoji.style.top = (y - 50) + "px";
         emoji.style.opacity = 0;
       }, 10);
       setTimeout(() => emoji.remove(), 1000);
-    });
+    }
   </script>
 </body>
 </html>
