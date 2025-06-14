@@ -101,10 +101,21 @@
       100% { transform: translateY(-10vh) rotate(45deg); opacity: 0; }
     }
 
-    @media (min-width: 600px) {
+    /* Show audio controls only on mobile */
+    #bgMusic {
+      display: none;
+    }
+
+    @media (max-width: 600px) {
       h1 { font-size: 3rem; }
       .message { font-size: 1.4rem; }
       .btn { font-size: 1.2rem; }
+
+      #bgMusic {
+        display: block;
+        margin: 20px auto;
+        width: 80%;
+      }
     }
   </style>
 </head>
@@ -130,8 +141,8 @@
     <div class="countdown" id="countdownTimer"></div>
   </div>
 
-  <!-- Audio (Hidden Controls for Mobile Compatibility) -->
-  <audio id="bgMusic" preload="auto" controls style="display: none;">
+  <!-- ✅ Audio visible on mobile -->
+  <audio id="bgMusic" preload="auto" controls>
     <source src="/mast-magan.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
@@ -152,10 +163,7 @@
     function playSong() {
       const music = document.getElementById("bgMusic");
       music.volume = 1.0;
-      music.play().catch(err => {
-        console.log("Mobile playback blocked:", err);
-        alert("Please tap the play button again to start the music 🎶");
-      });
+      music.play(); // Let browser handle mobile permission
     }
 
     // Countdown Timer
@@ -181,28 +189,4 @@
 
     // Emoji Trail
     const emojis = ["❤️", "💫", "💕"];
-    document.addEventListener("mousemove", (e) => spawnEmoji(e.pageX, e.pageY));
-    document.addEventListener("touchmove", (e) => {
-      const touch = e.touches[0];
-      spawnEmoji(touch.pageX, touch.pageY);
-    });
-
-    function spawnEmoji(x, y) {
-      const emoji = document.createElement("div");
-      emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      emoji.style.position = "absolute";
-      emoji.style.left = x + "px";
-      emoji.style.top = y + "px";
-      emoji.style.fontSize = "18px";
-      emoji.style.opacity = 1;
-      emoji.style.transition = "all 1s ease-out";
-      document.body.appendChild(emoji);
-      setTimeout(() => {
-        emoji.style.top = (y - 50) + "px";
-        emoji.style.opacity = 0;
-      }, 10);
-      setTimeout(() => emoji.remove(), 1000);
-    }
-  </script>
-</body>
-</html>
+    document.addEventListener("mousemove", (
