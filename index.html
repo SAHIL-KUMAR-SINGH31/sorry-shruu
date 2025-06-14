@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sorry Shruu 💔</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(120deg, #ffe6f0, #fff0f5);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      text-align: center;
+      max-width: 500px;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      color: #e91e63;
+      margin-bottom: 10px;
+    }
+
+    p, .quote {
+      color: #555;
+      font-size: 1rem;
+      margin-top: 15px;
+      line-height: 1.6;
+    }
+
+    .quote {
+      font-style: italic;
+      color: #b4004e;
+      margin-top: 30px;
+      font-size: 1.1rem;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: float 10s infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    .hearts {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .button {
+      margin-top: 30px;
+      background: #e91e63;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .button:hover {
+      background: #c2185b;
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts">
+    <div class="heart" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="heart" style="left: 25%; animation-delay: 2s;"></div>
+    <div class="heart" style="left: 40%; animation-delay: 4s;"></div>
+    <div class="heart" style="left: 60%; animation-delay: 1s;"></div>
+    <div class="heart" style="left: 80%; animation-delay: 3s;"></div>
+  </div>
+  <div class="container">
+    <h1>Sorry, Shruu 💔</h1>
+    <p>Mujhse galti ho gayi... par mera dil sirf tujhe hi chahta hai.  
+       Main janta hoon tu hurt hui, aur main sach mein uske liye sorry hoon.</p>
+
+    <p>Mera pyaar sachcha hai — tu sirf meri zindagi ka ek part nahi hai,  
+       tu meri zindagi ki *jaan* hai. Main har ek pal tera intezaar kar raha hoon.</p>
+
+    <div class="quote">"Narazgi utni hi gehri hoti hai jitna gehra pyaar hota hai..."</div>
+    <div class="quote">"Tu roothi hai, toh lage sab kuch adhoora… bas tu haan keh de, phir sab poora."</div>
+
+    <button class="button" onclick="alert('Agar tu maan gayi… toh meri duniya phir se roshan ho jaayegi 💘')">Tap if You Forgive Me</button>
+  </div>
+
+  <audio autoplay loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+  </audio>
+</body>
+</html>
