@@ -117,10 +117,11 @@
   <div class="typing" id="typewriter"></div>
 
   <button class="btn" onclick="alert('I Promise To Be Better 💖')">Tap If You Forgive Me</button>
-  <button class="btn" onclick="playMusic()">🎵 Play “Saware”</button>
+  <button class="btn" onclick="playMusic()">🎵 Play “Mast Magan”</button>
 
   <audio id="bgMusic" loop preload="auto">
-    <source src="https://cdn.pixabay.com/download/audio/2022/10/08/audio_9fa4844cd9.mp3?filename=saware-119542.mp3" type="audio/mpeg">
+    <source src="/mast-magan.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
   </audio>
 
   <script>
@@ -142,7 +143,7 @@
     function playMusic() {
       const music = document.getElementById("bgMusic");
       music.play()
-        .then(() => alert("🎶 'Saware' is now playing"))
+        .then(() => alert("🎶 'Mast Magan' is now playing"))
         .catch(() => alert("⚠️ Tap again to allow music."));
     }
 
