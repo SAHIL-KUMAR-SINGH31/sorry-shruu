@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sorry Shruu 💖</title>
   <style>
-    body {
+    html, body {
       margin: 0;
       padding: 0 16px;
       font-family: 'Segoe UI', sans-serif;
@@ -13,6 +13,7 @@
       color: #333;
       overflow-x: hidden;
       text-align: center;
+      height: 100%;
     }
 
     h1 {
@@ -53,7 +54,7 @@
     .section {
       margin-top: 40px;
       padding: 20px;
-      background: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.7);
       border-radius: 16px;
       box-shadow: 0 0 12px rgba(255, 105, 135, 0.5);
     }
@@ -72,6 +73,7 @@
       height: 100%;
       pointer-events: none;
       z-index: -1;
+      overflow: hidden;
     }
 
     .heart {
@@ -101,7 +103,15 @@
       100% { transform: translateY(-10vh) rotate(45deg); opacity: 0; }
     }
 
-    /* Show audio controls only on mobile */
+    .emoji {
+      position: absolute;
+      font-size: 18px;
+      opacity: 1;
+      pointer-events: none;
+      z-index: 10;
+      transition: all 1s ease-out;
+    }
+
     #bgMusic {
       display: none;
     }
@@ -110,7 +120,6 @@
       h1 { font-size: 3rem; }
       .message { font-size: 1.4rem; }
       .btn { font-size: 1.2rem; }
-
       #bgMusic {
         display: block;
         margin: 20px auto;
@@ -121,6 +130,7 @@
 </head>
 <body>
   <div class="hearts"></div>
+
   <h1>I'm Sorry Shruu 💔</h1>
 
   <div class="message">
@@ -138,17 +148,16 @@
   <div class="section">
     <h2>🎂 Shruu's Birthday Countdown</h2>
     <p>Countdown to her special day! 🎉</p>
-    <div class="countdown" id="countdownTimer"></div>
+    <div class="countdown" id="countdownTimer">Loading...</div>
   </div>
 
-  <!-- ✅ Audio visible on mobile -->
   <audio id="bgMusic" preload="auto" controls>
     <source src="/mast-magan.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
 
   <script>
-    // Floating hearts
+    // Hearts
     const hearts = document.querySelector('.hearts');
     for (let i = 0; i < 30; i++) {
       const heart = document.createElement('div');
@@ -159,14 +168,16 @@
       hearts.appendChild(heart);
     }
 
-    // Music playback
+    // Music play
     function playSong() {
       const music = document.getElementById("bgMusic");
       music.volume = 1.0;
-      music.play(); // Let browser handle mobile permission
+      music.play().catch(() => {
+        alert("Please tap the play button again to start the music 🎶");
+      });
     }
 
-    // Countdown Timer
+    // Countdown
     const countdown = document.getElementById("countdownTimer");
     const birthdayDate = new Date("2025-06-27T00:00:00").getTime();
 
@@ -189,4 +200,25 @@
 
     // Emoji Trail
     const emojis = ["❤️", "💫", "💕"];
-    document.addEventListener("mousemove", (
+    document.addEventListener("mousemove", (e) => spawnEmoji(e.pageX, e.pageY));
+    document.addEventListener("touchmove", (e) => {
+      const touch = e.touches[0];
+      spawnEmoji(touch.pageX, touch.pageY);
+    });
+
+    function spawnEmoji(x, y) {
+      const emoji = document.createElement("div");
+      emoji.className = "emoji";
+      emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      emoji.style.left = x + "px";
+      emoji.style.top = y + "px";
+      document.body.appendChild(emoji);
+      setTimeout(() => {
+        emoji.style.top = (y - 50) + "px";
+        emoji.style.opacity = 0;
+      }, 10);
+      setTimeout(() => emoji.remove(), 1000);
+    }
+  </script>
+</body>
+</html>
