@@ -10,34 +10,34 @@
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(to top left, #ffdde1, #ee9ca7);
       color: #333;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
       overflow: hidden;
       text-align: center;
-      animation: fadeIn 2s ease-in;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      height: 100vh;
     }
 
     h1 {
       font-size: 3rem;
-      margin-bottom: 10px;
+      margin-top: 60px;
+      animation: pulse 2s infinite;
+      color: #c62828;
     }
 
-    p {
-      font-size: 1.5rem;
-      max-width: 600px;
-      margin: 10px auto;
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .typing {
+      display: inline-block;
+      font-size: 1.4rem;
+      max-width: 80%;
+      white-space: pre-wrap;
+      margin: 20px auto;
     }
 
     .btn {
-      margin-top: 20px;
+      margin: 10px;
       padding: 12px 24px;
       font-size: 1.2rem;
       background: #ff6f91;
@@ -45,11 +45,13 @@
       border: none;
       border-radius: 10px;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: 0.3s ease;
+      box-shadow: 0 0 10px #ff6f91;
     }
 
     .btn:hover {
       transform: scale(1.05);
+      box-shadow: 0 0 20px #ff3e6c;
       background: #ff3e6c;
     }
 
@@ -58,17 +60,17 @@
       top: 0; left: 0;
       width: 100%;
       height: 100%;
-      z-index: -1;
       pointer-events: none;
+      z-index: -1;
     }
 
     .heart {
       width: 20px;
       height: 20px;
-      position: absolute;
       background: red;
+      position: absolute;
       transform: rotate(45deg);
-      animation: float 5s linear infinite;
+      animation: float 6s linear infinite;
     }
 
     .heart::before,
@@ -81,74 +83,110 @@
       border-radius: 50%;
     }
 
-    .heart::before {
-      top: -10px;
-      left: 0;
-    }
-
-    .heart::after {
-      top: 0;
-      left: -10px;
-    }
+    .heart::before { top: -10px; left: 0; }
+    .heart::after { top: 0; left: -10px; }
 
     @keyframes float {
       0% { transform: translateY(100vh) rotate(45deg); opacity: 1; }
       100% { transform: translateY(-10vh) rotate(45deg); opacity: 0; }
     }
 
+    .floating-text {
+      position: absolute;
+      color: #b71c1c;
+      font-weight: bold;
+      animation: drift 12s linear infinite;
+      font-size: 1.1rem;
+    }
+
+    @keyframes drift {
+      from { transform: translateY(100vh); opacity: 1; }
+      to { transform: translateY(-10vh); opacity: 0; }
+    }
+
     @media (max-width: 600px) {
-      h1 {
-        font-size: 2rem;
-      }
-      p {
-        font-size: 1.2rem;
-        padding: 0 20px;
-      }
-      .btn {
-        width: 80%;
-        font-size: 1rem;
-      }
+      h1 { font-size: 2rem; }
+      .btn { font-size: 1rem; width: 80%; }
+      .typing { font-size: 1.1rem; padding: 0 10px; }
     }
   </style>
 </head>
 <body>
   <div class="hearts"></div>
-
   <h1>I'm Sorry Shruu 💔</h1>
-  <p>Mujhse jo bhi bura lag gaya ho, please mujhe maaf kar do... bina tumhare sab kuch suna sa lagta hai. 😔</p>
-  <p>Tumse mazaak mein kuch keh diya, lekin dil se nahi bola tha... 💬💞</p>
+  <div class="typing" id="typewriter"></div>
 
   <button class="btn" onclick="alert('I Promise To Be Better 💖')">Tap If You Forgive Me</button>
-  <button class="btn" onclick="playMusic()">🎵 Tap to Play "Saware"</button>
+  <button class="btn" onclick="playMusic()">🎵 Play “Saware”</button>
 
   <audio id="bgMusic" loop preload="auto">
     <source src="https://cdn.pixabay.com/download/audio/2022/10/08/audio_9fa4844cd9.mp3?filename=saware-119542.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-    // Floating hearts
-    const heartsContainer = document.querySelector('.hearts');
+    // Typing Effect
+    const message = `Mujhse jo bhi bura lag gaya ho,\nplease mujhe maaf kar do...\nTumhare bina sab kuch suna sa lagta hai 😔\n\nKabhi kabhi mazaak mein kuch keh diya,\nlekin dil se nahi bola tha 💬💞`;
+    const typeTarget = document.getElementById("typewriter");
+    let i = 0;
+
+    function typeLine() {
+      if (i < message.length) {
+        typeTarget.textContent += message[i] === '\n' ? '\n' : message[i];
+        i++;
+        setTimeout(typeLine, 50);
+      }
+    }
+    typeLine();
+
+    // Music Play
+    function playMusic() {
+      const music = document.getElementById("bgMusic");
+      music.play()
+        .then(() => alert("🎶 'Saware' is now playing"))
+        .catch(() => alert("⚠️ Tap again to allow music."));
+    }
+
+    // Hearts Background
+    const hearts = document.querySelector('.hearts');
     for (let i = 0; i < 40; i++) {
       const heart = document.createElement('div');
       heart.className = 'heart';
       heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (3 + Math.random() * 2) + 's';
+      heart.style.animationDuration = (5 + Math.random() * 3) + 's';
       heart.style.top = Math.random() * 100 + 'vh';
-      heartsContainer.appendChild(heart);
+      hearts.appendChild(heart);
     }
 
-    // Music control
-    function playMusic() {
-      const music = document.getElementById("bgMusic");
-      music.play()
-        .then(() => {
-          alert('🎶 "Saware" is playing now');
-        })
-        .catch(err => {
-          console.log("Music play error:", err);
-          alert('⚠️ Unable to play music. Try tapping again.');
-        });
+    // Floating "I miss you"
+    const texts = ["I miss you 💭", "💖 Thinking of you", "Tere bina sab suna hai..."];
+    for (let i = 0; i < 15; i++) {
+      const float = document.createElement('div');
+      float.className = 'floating-text';
+      float.innerText = texts[i % texts.length];
+      float.style.left = Math.random() * 90 + 'vw';
+      float.style.top = Math.random() * 100 + 'vh';
+      float.style.animationDuration = (8 + Math.random() * 5) + 's';
+      document.body.appendChild(float);
     }
+
+    // Emoji Trail
+    const emojis = ["❤️", "💫", "💕"];
+    document.addEventListener("mousemove", (e) => {
+      const emoji = document.createElement("div");
+      emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      emoji.style.position = "absolute";
+      emoji.style.left = e.pageX + "px";
+      emoji.style.top = e.pageY + "px";
+      emoji.style.fontSize = "20px";
+      emoji.style.opacity = 1;
+      emoji.style.transition = "all 1s ease-out";
+      document.body.appendChild(emoji);
+      setTimeout(() => {
+        emoji.style.top = (e.pageY - 50) + "px";
+        emoji.style.opacity = 0;
+      }, 10);
+      setTimeout(() => emoji.remove(), 1000);
+    });
   </script>
 </body>
 </html>
