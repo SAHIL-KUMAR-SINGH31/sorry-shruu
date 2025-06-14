@@ -130,9 +130,9 @@
     <div class="countdown" id="countdownTimer"></div>
   </div>
 
-  <!-- Audio Player (keep controls visible for mobile compatibility) -->
-  <audio id="bgMusic" preload="auto" controls style="margin-top: 20px;">
-    <source src="mast-magan.mp3" type="audio/mpeg" />
+  <!-- Audio (Hidden Controls for Mobile Compatibility) -->
+  <audio id="bgMusic" preload="auto" controls style="display: none;">
+    <source src="/mast-magan.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
 
@@ -148,15 +148,13 @@
       hearts.appendChild(heart);
     }
 
-    // Play music
+    // Music playback
     function playSong() {
       const music = document.getElementById("bgMusic");
       music.volume = 1.0;
-      music.play().then(() => {
-        console.log("Music started");
-      }).catch((err) => {
-        console.error("Playback blocked:", err);
-        alert("Please tap the play button again to start the song 🎶");
+      music.play().catch(err => {
+        console.log("Mobile playback blocked:", err);
+        alert("Please tap the play button again to start the music 🎶");
       });
     }
 
